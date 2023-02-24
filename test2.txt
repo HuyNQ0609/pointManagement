@@ -1,0 +1,34 @@
+create database point_management;
+use point_management;
+
+create table Students (
+    student_code varchar(20) primary key,
+    student_name varchar(50) not null,
+    date_of_birth datetime not null,
+    class varchar(20),
+    sex varchar(20)
+);
+
+create table Subjects (
+    subject_code varchar(20) primary key,
+    subject_name varchar(50) not null
+);
+
+create table Transcript (
+    student_code varchar(20),
+    subject_code varchar(20),
+    test_score int not null,
+    test_day datetime not null,
+    primary key (student_code, subject_code),
+    foreign key (student_code) references Students(student_code),
+    foreign key (subject_code) references Subjects(subject_code)
+);
+
+create table Teachers (
+    teacher_code varchar(20) primary key,
+    teacher_name varchar(20) not null,
+    phone varchar(10) unique
+);
+
+alter table Subjects add teacher_code varchar(20);
+alter table Subjects add constraint fk_teacher_code foreign key (teacher_code) references Teachers(teacher_code);
